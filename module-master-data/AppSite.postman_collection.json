@@ -1,0 +1,2477 @@
+{
+	"info": {
+		"_postman_id": "7790cae6-c439-4c50-8a60-420af42773ec",
+		"name": "AppSite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Connections",
+			"item": [
+				{
+					"name": "set up (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create random user 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"// get created user id\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"userId1\", response.id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"{{$randomEmail}}\",\r\n  \"userPassword\": \"A1{{$randomPassword}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{$randomFirstName}}\",\r\n    \"userBirthDate\": \"01-01-2000\",\r\n    \"userCountry\": \"Portugal\",\r\n    \"userCity\": \"Porto\",\r\n    \"userDescription\": \"I'm random user!\",\r\n    \"userPhone\": \"+351911777888\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"isep\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create random user 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"// get created user id\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"userId2\", response.id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"{{$randomEmail}}\",\r\n  \"userPassword\": \"A1{{$randomPassword}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{$randomFirstName}}\",\r\n    \"userBirthDate\": \"01-01-2000\",\r\n    \"userCountry\": \"Portugal\",\r\n    \"userCity\": \"Porto\",\r\n    \"userDescription\": \"I'm random user!\",\r\n    \"userPhone\": \"+351911777888\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"isep\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Assert 1 User Exists\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.length).to.eql(2);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all connections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"[]\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create connection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body isn't empty nor an exception\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"    pm.response.to.not.have.body(\"Invalid Connection : User(s) Not Found\");\r",
+									"    pm.response.to.not.have.body(\"Duplicate Connection\");\r",
+									"});\r",
+									"\r",
+									"// get created connection id\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"connectionId\", response.id);\r",
+									"pm.environment.set(\"connectionBondValue\", response.bondValue);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.get(\"userId1\");\r",
+									"pm.environment.get(\"userId2\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user1Id\": \"{{userId1}}\",\r\n  \"user2Id\": \"{{userId2}}\",\r\n  \"strength1\": 20,\r\n  \"strength2\": 45\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit connection",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.get(\"connectionId\");\r",
+									"pm.environment.get(\"userId1\");\r",
+									"pm.environment.get(\"userId2\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body isn't empty nor an exception\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"    pm.response.to.not.have.body(\"Invalid Connection : User(s) Not Found\");\r",
+									"});\r",
+									"\r",
+									"// get response json\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Body is coherent\", function () {\r",
+									"    pm.expect(response.id).to.eql(pm.environment.get(\"connectionId\"));\r",
+									"    pm.expect(response.strength1).to.eql(37);\r",
+									"    pm.expect(response.strength2).to.eql(45);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\" : \"{{connectionId}}\",\r\n  \"user1Id\": \"{{userId1}}\",\r\n  \"user2Id\": \"{{userId2}}\",\r\n  \"strength1\": 37,\r\n  \"strength2\": 45,\r\n  \"bondValue\": {{connectionBondValue}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/connections/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{connectionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create connection (invalid)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"Invalid Connection : User(s) Not Found\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user1Id\": \"cb58c220-dd80-488d-883f-4d466c558863\",\r\n  \"user2Id\": \"b70580c9-dc8d-4f14-9d07-3f2ee1b419cf\",\r\n  \"strength1\": 0,\r\n  \"strength2\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get connection by id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is coherent\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.id).to.eql(pm.environment.get(\"connectionId\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/connections/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{connectionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get connection by users id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/connections/userId1={{userId1}}&userId2={{userId2}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections",
+								"userId1={{userId1}}&userId2={{userId2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete connection by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is coherent\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.id).to.eql(pm.environment.get(\"connectionId\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/connections/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{connectionId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all connections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is correct\", function () {\r",
+									"    pm.response.to.have.body(\"[]\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tear down (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Social Network",
+			"item": [
+				{
+					"name": "set up (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"// save created user id\r",
+									"const response = pm.response.json();\r",
+									"var userIds = pm.environment.get(\"userIds\");\r",
+									"userIds.push(response.id);\r",
+									"pm.environment.set(\"userIds\", userIds);\r",
+									"\r",
+									"// set next request\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (index > 0) {\r",
+									"    postman.setNextRequest(\"create users\");\r",
+									"} else {\r",
+									"    pm.environment.set(\"index\", -1);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const information = [\r",
+									"    [\"jose273@gmail.com\", \"Jose1973!\", \"jose273\"],\r",
+									"    [\"xana@hotmail.com\", \"Sneaky!!!\", \"xaninha\"],\r",
+									"    [\"rui.manuel@gmail.com\", \"Manel35!\", \"manel\"]\r",
+									"]\r",
+									"\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (!index || index < 0) {\r",
+									"    pm.environment.set(\"userIds\", []);\r",
+									"    index = information.length;\r",
+									"}\r",
+									"\r",
+									"index--;\r",
+									"var current = information[index];\r",
+									"pm.environment.set(\"index\", index);\r",
+									"\r",
+									"pm.environment.set(\"userEmail\", current[0]);\r",
+									"pm.environment.set(\"userPassword\",  current[1]);\r",
+									"pm.environment.set(\"userName\",  current[2]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{userPassword}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{userName}}\",\r\n    \"userBirthDate\": \"01-01-2000\",\r\n    \"userCountry\": \"Portugal\",\r\n    \"userCity\": \"Porto\",\r\n    \"userDescription\": \"I'm random user!\",\r\n    \"userPhone\": \"+351911777888\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"isep\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create connections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body isn't empty nor an exception\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"    pm.response.to.not.have.body(\"Invalid Connection : User(s) Not Found\");\r",
+									"});\r",
+									"\r",
+									"// set next request\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (index > 0) {\r",
+									"    postman.setNextRequest(\"create connections\");\r",
+									"} else {\r",
+									"    pm.environment.set(\"index\", -1);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// u1, u2, s1, s2\r",
+									"const information = [\r",
+									"    [0, 0, 20, 30],\r",
+									"    [0, 1, 50, 50],\r",
+									"    [1, 2, 85, 100]\r",
+									"]\r",
+									"\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (!index || index < 0) {\r",
+									"    index = information.length;\r",
+									"}\r",
+									"\r",
+									"index--;\r",
+									"var current = information[index];\r",
+									"pm.environment.set(\"index\", index);\r",
+									"\r",
+									"var userIds = pm.environment.get(\"userIds\");\r",
+									"pm.environment.set(\"userId1\", userIds[current[0]]);\r",
+									"pm.environment.set(\"userId2\",  userIds[current[1]]);\r",
+									"pm.environment.set(\"strength1\", current[2]);\r",
+									"pm.environment.set(\"strength2\",  current[3]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user1Id\": \"{{userId1}}\",\r\n  \"user2Id\": \"{{userId2}}\",\r\n  \"strength1\": {{strength1}},\r\n  \"strength2\": {{strength2}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all connections",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body isn't empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "network overview",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/networks",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"networks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tear down (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "UsersTest",
+					"item": [
+						{
+							"name": "PostInvalidEmail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message\",()=>{\r",
+											"  var message= jsonData.errors[\"UserEmail\"][0];\r",
+											"\r",
+											"pm.expect(message).to.eqls(\"The UserEmail field is not a valid e-mail address.\");\r",
+											"console.log(message);\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"1190558isep.ipp.pt\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostInvalidPassword",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 \", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message Invalid Password \",()=>{\r",
+											"pm.expect(jsonData.message).to.eql(\"Invalid Password. Must be at least 8 characters long and contain one UpperCase and one special character!\");\r",
+											"\r",
+											"console.log(jsonData.message)\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"{{userEmail2}}\",\r\n  \"userPassword\": \"nvrmind.991\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostInvalidProfileName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 \", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message Invalid ProfileName\",()=>{\r",
+											"   var message= jsonData.errors[\"UserProfile.ProfileUserName\"][0];\r",
+											"  \r",
+											"pm.expect(message).to.eqls(\"Must be aplhanumeric and without space!\");\r",
+											" console.log(message);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \" Emily_2001\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostInvalidBirthDate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message Invalid BirtDate\",()=>{\r",
+											"\r",
+											"\r",
+											"    var message= jsonData.errors[\"UserProfile.UserBirthDate\"][0];\r",
+											" \r",
+											"pm.expect(message).to.eql(\"User should be at least 16 years old to access.\");\r",
+											"\r",
+											"console.log(message);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"20-07-2016\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostInvalidDescription",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message Invalid Description\",()=>{\r",
+											"\r",
+											"\r",
+											"    var message= jsonData.errors[\"UserProfile.UserDescription\"][0];\r",
+											" \r",
+											"pm.expect(message).to.eql(\"The field UserDescription must be a string or array type with a maximum length of '4000'.\");\r",
+											"\r",
+											"console.log(message);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way. On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word 'and' and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their projects again and again. And if she hasn’t been rewritten, then they are still using her. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way. On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word 'and' and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their projects again and again. And if she hasn’t been rewritten, then they are still using her. Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it.\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostPhoneNumber",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400 \", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message Invalid Phone Number\",()=>{\r",
+											"\r",
+											"\r",
+											"    var message= jsonData.errors[\"UserProfile.UserPhone\"][0];\r",
+											" \r",
+											"pm.expect(message).to.eql(\"Must follow format + country code phone_number\");\r",
+											"\r",
+											"console.log(message);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"933055634\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UserRequestMethods",
+					"item": [
+						{
+							"name": "EmptyUsers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response is Empty\", function () {\r",
+											"    var JsonData= pm.response.json();\r",
+											"    pm.expect(JsonData).to.be.empty;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostUsers",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"console.log(pm.response.json());\r",
+											"   var jsonData = pm.response.json();\r",
+											"   var userEmailValue = jsonData.userEmail;\r",
+											"   pm.environment.set(\"userEmail\",userEmailValue);\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n  \"userEmail\": \"{{$randomEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUsers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"var response = pm.response.json();\r",
+											"console.log(response[0].id);\r",
+											"var idValue =response[0].id\r",
+											"pm.environment.set(\"userId\",idValue)\r",
+											"\r",
+											"console.log(pm.environment.get(\"userId\"));\r",
+											"console.log(response[0].userProfile.id)\r",
+											"var idValue2 =response[0].userProfile.id;\r",
+											"pm.environment.set(\"userProfileId\",idValue2)\r",
+											"\r",
+											"console.log(pm.environment.get(\"userProfileId\"));\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"console.log(pm.response.json());\r",
+											"\r",
+											"pm.test(\"Check Values\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0].userEmail).to.eql(pm.environment.get(\"userEmail\"));\r",
+											"    pm.expect(jsonData[0].userProfile.profileUserName).to.eql(pm.environment.get(\"profileName\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userBirthDate).to.eql(pm.environment.get(\"birthDate\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userCountry).to.eql(pm.environment.get(\"country\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userCity).to.eql(pm.environment.get(\"city\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userDescription).to.eql(pm.environment.get(\"description\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userPhone).to.eql(pm.environment.get(\"phoneNumber\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userTagCloud.tags[0].tag).to.eql(pm.environment.get(\"tag1\"));\r",
+											"    pm.expect(jsonData[0].userProfile.userTagCloud.tags[1].tag).to.eql(pm.environment.get(\"tag2\"));\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n\r\n\r\n\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUserById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"console.log(pm.response.json());\r",
+											"\r",
+											"pm.test(\"Check Values\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.userEmail).to.eql(pm.environment.get(\"userEmail\"));\r",
+											"    pm.expect(jsonData.userProfile.profileUserName).to.eql(pm.environment.get(\"profileName\"));\r",
+											"    pm.expect(jsonData.userProfile.userBirthDate).to.eql(pm.environment.get(\"birthDate\"));\r",
+											"    pm.expect(jsonData.userProfile.userCountry).to.eql(pm.environment.get(\"country\"));\r",
+											"    pm.expect(jsonData.userProfile.userCity).to.eql(pm.environment.get(\"city\"));\r",
+											"    pm.expect(jsonData.userProfile.userDescription).to.eql(pm.environment.get(\"description\"));\r",
+											"    pm.expect(jsonData.userProfile.userPhone).to.eql(pm.environment.get(\"phoneNumber\"));\r",
+											"    pm.expect(jsonData.userProfile.userTagCloud.tags[0].tag).to.eql(pm.environment.get(\"tag1\"));\r",
+											"    pm.expect(jsonData.userProfile.userTagCloud.tags[1].tag).to.eql(pm.environment.get(\"tag2\"));\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:5001/api/Users/{{userId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users",
+										"{{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetUserProfile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Check Profile\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(jsonData.profileUserName).to.eql(pm.environment.get(\"profileName\"));\r",
+											"    pm.expect(jsonData.userBirthDate).to.eql(pm.environment.get(\"birthDate\"));\r",
+											"    pm.expect(jsonData.userCountry).to.eql(pm.environment.get(\"country\"));\r",
+											"    pm.expect(jsonData.userCity).to.eql(pm.environment.get(\"city\"));\r",
+											"    pm.expect(jsonData.userDescription).to.eql(pm.environment.get(\"description\"));\r",
+											"    pm.expect(jsonData.userPhone).to.eql(pm.environment.get(\"phoneNumber\"));\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:5001/api/Users/UserProfile/id={{userId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users",
+										"UserProfile",
+										"id={{userId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update UserProfile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"console.log(pm.environment.get(\"userId\"));\r",
+											"console.log(pm.environment.get(\"userProfileId\"));\r",
+											"\r",
+											"pm.test(\"Check Profile Update\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    \r",
+											"    pm.expect(jsonData.userCity).to.eql(\"Aveiro\");\r",
+											" \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{  \r\n   \r\n            \"id\": \"{{userProfileId}}\",\r\n            \"profileUserName\": \"\",\r\n            \"userBirthDate\": \"30-05-2001\",\r\n            \"userCountry\": \"\",\r\n            \"userCity\": \"Aveiro\",\r\n            \"userDescription\": \"Hello it's me\",\r\n            \"userPhone\": \"\",\r\n            \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n    \r\n}\r\n    ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users/UserProfile/{{userProfileId}}",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users",
+										"UserProfile",
+										"{{userProfileId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PostAlreadyExistsEmail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"const jsonData = pm.response.json();\r",
+											"pm.test(\"Error message\",()=>{\r",
+											"  var message= jsonData.message;\r",
+											"\r",
+											"pm.expect(message).to.eqls(\"User already exists with that email\");\r",
+											"console.log(message);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{password}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{profileName}}\",\r\n    \"userBirthDate\": \"{{birthDate}}\",\r\n    \"userCountry\": \"{{country}}\",\r\n    \"userCity\": \"{{city}}\",\r\n    \"userDescription\": \"{{description}}\",\r\n    \"userPhone\": \"{{phoneNumber}}\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"{{tag1}}\"},\r\n          {\r\n          \"tag\": \"{{tag2}}\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/Users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"Users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "tear down (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "This folder contains Http Requests and Tests regarding UC8 - Register User and UC5 - Update User Profile"
+		},
+		{
+			"name": "IntroductionRequests",
+			"item": [
+				{
+					"name": "create users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"// save created user id\r",
+									"const response = pm.response.json();\r",
+									"var userIds = pm.environment.get(\"userIds\");\r",
+									"userIds.push(response.id);\r",
+									"pm.environment.set(\"userIds\", userIds);\r",
+									"\r",
+									"// set next request\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (index > 0) {\r",
+									"    postman.setNextRequest(\"create users\");\r",
+									"} else {\r",
+									"    pm.environment.set(\"index\", -1);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const information = [\r",
+									"    [\"jose273@gmail.com\", \"Jose1973!\", \"jose273\"],\r",
+									"    [\"xana@hotmail.com\", \"Sneaky!!!\", \"xaninha\"],\r",
+									"    [\"rui.manuel@gmail.com\", \"Manel35!\", \"manel\"]\r",
+									"]\r",
+									"\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (!index || index < 0) {\r",
+									"    pm.environment.set(\"userIds\", []);\r",
+									"    index = information.length;\r",
+									"}\r",
+									"\r",
+									"index--;\r",
+									"var current = information[index];\r",
+									"pm.environment.set(\"index\", index);\r",
+									"\r",
+									"pm.environment.set(\"userEmail\", current[0]);\r",
+									"pm.environment.set(\"userPassword\",  current[1]);\r",
+									"pm.environment.set(\"userName\",  current[2]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{userPassword}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{userName}}\",\r\n    \"userBirthDate\": \"01-01-2000\",\r\n    \"userCountry\": \"Portugal\",\r\n    \"userCity\": \"Porto\",\r\n    \"userDescription\": \"I'm random user!\",\r\n    \"userPhone\": \"+351911777888\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"isep\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();\r",
+									"console.log(response[0].id);\r",
+									"var idValue =response[0].id\r",
+									"pm.environment.set(\"targetUser\",idValue)\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"console.log(response[1].id);\r",
+									"var idValue =response[1].id\r",
+									"pm.environment.set(\"intermediateUser\",idValue)\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"console.log(response[2].id);\r",
+									"var idValue =response[2].id\r",
+									"pm.environment.set(\"introductionUser\",idValue)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostIntroductionRequests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"targetUser\": \"{{targetUser}}\",\r\n  \"intermediateUser\": \"{{intermediateUser}}\",\r\n  \"introductionUser\": \"{{introductionUser}}\",\r\n  \"introductionText\": \"Olá, introduz-me ao utilizador, por favor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/IntroductionRequests",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"IntroductionRequests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetIntroductionRequests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"console.log(response[0].id);\r",
+									"var idValue =response[0].id;\r",
+									"pm.environment.set(\"introductionRequestId\",idValue);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/IntroductionRequests",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"IntroductionRequests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostInvalidUserNotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400 - Bad Request\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Error message Invalid User\",()=>{\r",
+									"\r",
+									"\r",
+									"    var message= jsonData.message;\r",
+									" \r",
+									"pm.expect(message).to.eql(\"User not found\");\r",
+									"\r",
+									"console.log(message);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"targetUser\": \"abdec166-785d-40b7-aacf-23ff599e9641\",\r\n  \"intermediateUser\": \"{{intermediateUser}}\",\r\n  \"introductionUser\": \"{{introductionUser}}\",\r\n  \"introductionText\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/IntroductionRequests",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"IntroductionRequests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutIntroductionRequestStateAccept",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.environment.get(\"introductionRequestId\"));\r",
+									"\r",
+									"pm.test(\"Check State Update\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    console.log(jsonData.introductionRequestState);\r",
+									"    pm.expect(jsonData.introductionRequestState).to.eql(\" accepted\");\r",
+									" \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"introductionRequestState\" : \"{{introductionRequestStateAccept}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/IntroductionRequests/{{introductionRequestId}}?update=accepted",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"IntroductionRequests",
+								"{{introductionRequestId}}"
+							],
+							"query": [
+								{
+									"key": "update",
+									"value": "accepted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutIntroductionRequestReject",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.environment.get(\"introductionRequestId\"));\r",
+									"\r",
+									"pm.test(\"Check State Update\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    console.log(jsonData.introductionRequestState);\r",
+									"    pm.expect(jsonData.introductionRequestState).to.eql(\" rejected\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"introductionRequestState\" : \"{{introductionRequestStateReject}}\"\r\n   } \r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/IntroductionRequests/{{introductionRequestId}}?update={{introductionRequestStateReject}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"IntroductionRequests",
+								"{{introductionRequestId}}"
+							],
+							"query": [
+								{
+									"key": "update",
+									"value": "{{introductionRequestStateReject}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tear down (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ConnectionRequest",
+			"item": [
+				{
+					"name": "create users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Body is not empty\", function () {\r",
+									"    pm.response.to.have.body();\r",
+									"});\r",
+									"\r",
+									"// save created user id\r",
+									"const response = pm.response.json();\r",
+									"var userIds = pm.environment.get(\"userIds\");\r",
+									"userIds.push(response.id);\r",
+									"pm.environment.set(\"userIds\", userIds);\r",
+									"\r",
+									"// set next request\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (index > 0) {\r",
+									"    postman.setNextRequest(\"create users\");\r",
+									"} else {\r",
+									"    pm.environment.set(\"index\", -1);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const information = [\r",
+									"    [\"jose273@gmail.com\", \"Jose1973!\", \"jose273\"],\r",
+									"    [\"xana@hotmail.com\", \"Sneaky!!!\", \"xaninha\"],\r",
+									"    [\"rui.manuel@gmail.com\", \"Manel35!\", \"manel\"]\r",
+									"]\r",
+									"\r",
+									"var index = pm.environment.get(\"index\");\r",
+									"if (!index || index < 0) {\r",
+									"    pm.environment.set(\"userIds\", []);\r",
+									"    index = information.length;\r",
+									"}\r",
+									"\r",
+									"index--;\r",
+									"var current = information[index];\r",
+									"pm.environment.set(\"index\", index);\r",
+									"\r",
+									"pm.environment.set(\"userEmail\", current[0]);\r",
+									"pm.environment.set(\"userPassword\",  current[1]);\r",
+									"pm.environment.set(\"userName\",  current[2]);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userEmail\": \"{{userEmail}}\",\r\n  \"userPassword\": \"{{userPassword}}\",\r\n  \"userProfile\": {\r\n    \"profileUserName\": \"{{userName}}\",\r\n    \"userBirthDate\": \"01-01-2000\",\r\n    \"userCountry\": \"Portugal\",\r\n    \"userCity\": \"Porto\",\r\n    \"userDescription\": \"I'm random user!\",\r\n    \"userPhone\": \"+351911777888\",\r\n    \"userTagCloud\": {\r\n      \"tags\": [\r\n        {\r\n          \"tag\": \"isep\"\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var response = pm.response.json();",
+									"console.log(response[0].id);",
+									"var idValue =response[0].id",
+									"pm.environment.set(\"UserSentId\",idValue)",
+									"",
+									"var response = pm.response.json();",
+									"console.log(response[1].id);",
+									"var idValue =response[1].id",
+									"pm.environment.set(\"UserReceiveId\",idValue)",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Users found\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.not.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/Users",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"Users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetConnectionRequestEmpty",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection Request empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.empty;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostConnectionRequest",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"var id = jsonData.id;",
+									"pm.environment.set(\"ConnectionRequestId\", id);",
+									"",
+									"pm.test(\"Check Value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"ConnectionRequestId\"));",
+									"    pm.expect(jsonData.userSentDto.id).to.eql(pm.environment.get(\"UserSentId\"));",
+									"    pm.expect(jsonData.userReceiveDto.id).to.eql(pm.environment.get(\"UserReceiveId\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userSent\": \"{{UserSentId}}\",\n  \"userReceive\": \"{{UserReceiveId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetConnectionRequests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Connection Request empty\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).not.to.be.empty;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetConnectionRequestById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Value\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"ConnectionRequestId\"));",
+									"    pm.expect(jsonData.userSentDto.id).to.eql(pm.environment.get(\"UserSentId\"));",
+									"    pm.expect(jsonData.userReceiveDto.id).to.eql(pm.environment.get(\"UserReceiveId\"));",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest/{{ConnectionRequestId}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest",
+								"{{ConnectionRequestId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutAccepted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.connectionRequestState).to.eql(\" accepted\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ConnectionRequestState\":\"{{Accepted}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest/{{ConnectionRequestId}}?update=accepted",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest",
+								"{{ConnectionRequestId}}"
+							],
+							"query": [
+								{
+									"key": "update",
+									"value": "accepted"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutRejected",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    console.log(jsonData);",
+									"    pm.expect(jsonData.connectionRequestState).to.eql(\" rejected\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ConnectionRequestState\":\"{{Rejected}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ConnectionRequest/{{ConnectionRequestId}}?update=rejected",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ConnectionRequest",
+								"{{ConnectionRequestId}}"
+							],
+							"query": [
+								{
+									"key": "update",
+									"value": "rejected"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tear down (delete all)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aux",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aux"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:5001/api"
+		}
+	]
+}
