@@ -1,0 +1,44 @@
+{
+  "TermsAndConditions": {
+    "Titles": [
+      "Termos e responsabilidades",
+      "Responsável tratamento de dados:",
+      "Dados a recolher:",
+      "Finalidades:"
+    ],
+    "Fields": [
+      {
+        "title": "Nome:",
+        "textField": "Graphs4Social, S.A."
+      },
+      {
+        "title": "Morada:",
+        "textField": "Rua das Avestruzes, 119, Porto, 4452-192"
+      },
+      {
+        "title": "Endereço Eletrónico:",
+        "textField": "apoioaocliente@graphs4social.com"
+      },
+      {
+        "title": "Contacto:",
+        "textField": "224214981"
+      },
+      {
+        "title": "Contribuinte:",
+        "textField": "279443298"
+      }
+    ],
+    "data": "Nome, data de nascimento, email e contacto telefónico.",
+    "finalidades": [
+      "•Registo do utilizador para aceder ao sistema e interagir com o próprio;",
+      "•Editar dados pessoais do utilizador;",
+      "•Editar  estado  de  humor  em  base  da  metodologia  OCC  (inteligência artificial);",
+      "•Publicações de posts;",
+      "•Efetuar pedidos de ligação com outros utilizadores do sistema;",
+      "•Expor  o  perfil  (dados  necessários)  para  utilizadores  do  qual  têm  ligação estabelecida;",
+      "•Interação com outros utilizadores do qual é amigo;",
+      "•Sugestão  de  utilizadores  do  qual  pode  estabelecer  ligação  em  base  ao perfil (tags de interesse) do sujeito em questão (IA).",
+      "•Possibilidade de poder exercer a opção de esquecimento dos seus dados pessoais ao abrigo do artigo 17 do RGPD."
+    ]
+  }
+}
